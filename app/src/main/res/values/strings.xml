@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">MLFirebase</string>
+    <string name="action_settings">Settings</string>
+    <string name="text_recognize_text">Recognize Text</string>
+    <string name="txt_detect_faces">Detect Faces</string>
+    <string name="txt_scan_barcode">Scan Barcode</string>
+    <string name="txt_label_image">Label Image</string>
+    <string name="img_test">Image Test ML Kit</string>
+    <string name="txt_land_mark">Land Mark</string>
+    <string name="request_permission">Please, the permissions are obligatories</string>
+    <string name="select_img">Select an Image</string>
+</resources>
