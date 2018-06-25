@@ -84,9 +84,9 @@ class MLActivity : AppCompatActivity() {
 
                 blocks.forEach { Log.i("MLActivity", it.text) }
             }
-        }
 
-        image?.let { detector.detectInImage(it).addOnFailureListener { Log.i("MLActivity", it.message) } }
+            detector.detectInImage(it).addOnFailureListener { Log.i("MLActivity", it.message) }
+        }
 
     }
 
@@ -94,9 +94,10 @@ class MLActivity : AppCompatActivity() {
 
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(packageManager) != null) {
+        takePictureIntent.resolveActivity(packageManager).let {
             // Create the File where the photo should go
             var photoFile: File? = null
+
             try {
                 photoFile = createImageFile()
             } catch (ex: IOException) {
@@ -104,13 +105,14 @@ class MLActivity : AppCompatActivity() {
             }
 
             // Continue only if the File was successfully created
-            if (photoFile != null) {
+            photoFile.let {
                 photoURI = FileProvider.getUriForFile(this,
                         "co.edu.ucc.todoapp.android.fileprovider",
-                        photoFile)
+                        it!!)
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
             }
+
         }
     }
 
