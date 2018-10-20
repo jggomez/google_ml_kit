@@ -16,8 +16,10 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.firebase.ml.vision.FirebaseVision
+import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcode
+import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetectorOptions
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
-import com.google.firebase.ml.vision.text.FirebaseVisionTextDetector
+import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_ml.*
 import kotlinx.android.synthetic.main.content_ml.*
@@ -41,6 +43,9 @@ class MLActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         btnRecognizeText.setOnClickListener { recognizeText() }
+        btnScanBarcode.setOnClickListener { readCodeBars() }
+        btnDetectFaces.setOnClickListener { detectFaces() }
+        btnLabelImages.setOnClickListener { detectLabels() }
 
         btnImage.setOnClickListener {
             if (requestPermisssion()) {
@@ -75,20 +80,109 @@ class MLActivity : AppCompatActivity() {
     private fun recognizeText() {
         val image = photoURI?.let { FirebaseVisionImage.fromFilePath(this, it) }
 
-        val detector: FirebaseVisionTextDetector = FirebaseVision.getInstance().visionTextDetector
+        val detector = FirebaseVision.getInstance().onDeviceTextRecognizer
 
         image?.let {
-            detector.detectInImage(it).addOnSuccessListener { firebaseVisionText ->
+            detector.processImage(it).addOnSuccessListener { firebaseVisionText ->
 
-                val blocks = firebaseVisionText.blocks
+                val blocks = firebaseVisionText.textBlocks
 
-                blocks.forEach { Log.i("MLActivity", it.text) }
-            }
+                Log.i("ML_Text_FullText", firebaseVisionText.text)
 
-            detector.detectInImage(it).addOnFailureListener { Log.i("MLActivity", it.message) }
+                blocks.forEach {
+                    Log.i("ML_RecognizeText Blocks", it.text)
+
+                    it.lines.forEach {
+                        Log.i("ML_RecognizeText Lines", it.text)
+
+                        it.elements.forEach {
+                            Log.i("ML_Text Elements", it.text)
+                        }
+
+                    }
+                }
+
+
+            }.addOnFailureListener { Log.e("MLActivity", it.message) }
         }
 
     }
+
+    private fun detectFaces() {
+
+        val image = photoURI?.let { FirebaseVisionImage.fromFilePath(this, it) }
+
+        val options =
+                FirebaseVisionFaceDetectorOptions.Builder()
+                        .setPerformanceMode(FirebaseVisionFaceDetectorOptions.ACCURATE)
+                        .setLandmarkMode(FirebaseVisionFaceDetectorOptions.ALL_LANDMARKS)
+                        .setClassificationMode(FirebaseVisionFaceDetectorOptions.ALL_CLASSIFICATIONS)
+                        .build()
+
+        val detector = FirebaseVision.getInstance().getVisionFaceDetector(options)
+
+        image?.let {
+            detector.detectInImage(it).addOnSuccessListener { faces ->
+
+                Log.i("ML_RecognizeFaces Num", faces.size.toString())
+
+            }.addOnFailureListener { Log.e("MLActivity", it.message) }
+        }
+
+    }
+
+    private fun readCodeBars() {
+
+        val options =
+                FirebaseVisionBarcodeDetectorOptions.Builder()
+                        .setBarcodeFormats(
+                                FirebaseVisionBarcode.FORMAT_PDF417)
+                        .build()
+
+        try {
+
+            val image = photoURI?.let { FirebaseVisionImage.fromFilePath(this, it) }
+
+            val detector = FirebaseVision.getInstance()
+                    .getVisionBarcodeDetector(options)
+
+            image?.let {
+                detector.detectInImage(it).addOnSuccessListener { barcodes ->
+                    barcodes.forEach { Log.i("MLActivity_codebar", it.rawValue) }
+                }.addOnFailureListener { Log.e("MLActivity", it.message) }
+            }
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun detectLabels() {
+
+        try {
+
+            val image = photoURI?.let { FirebaseVisionImage.fromFilePath(this, it) }
+
+            val detector = FirebaseVision.getInstance().visionLabelDetector
+
+            image?.let {
+                detector.detectInImage(it).addOnSuccessListener { labels ->
+                    labels.forEach {
+                        Log.i("MLActivity_label", it.label)
+                        Log.i("MLActivity_entityId", it.entityId)
+                        Log.i("MLActivity_confidence", it.confidence.toString())
+                    }
+                }.addOnFailureListener { Log.e("MLActivity", it.message) }
+            }
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+
+    }
+
 
     private fun takePhoto() {
 
