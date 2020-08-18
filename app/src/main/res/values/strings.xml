@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MLFirebase</string>
+    <string name="app_name">ML Kit Android</string>
     <string name="action_settings">Settings</string>
     <string name="text_recognize_text">Recognize Text</string>
     <string name="txt_detect_faces">Detect Faces</string>
@@ -7,6 +7,14 @@
     <string name="txt_label_image">Label Image</string>
     <string name="img_test">Image Test ML Kit</string>
     <string name="txt_land_mark">Land Mark</string>
-    <string name="request_permission">Please, the permissions are obligatories</string>
+    <string name="request_permission">Please, the permissions are mandatory</string>
     <string name="select_img">Select an Image</string>
+    <string name="lbl_error">Error</string>
+    <string name="lbl_ok">OK</string>
+    <string name="lbl_info">Información</string>
+
+    <string-array name="options_image">
+        <item>Galery</item>
+        <item>Take a Photo</item>
+    </string-array>
 </resources>
