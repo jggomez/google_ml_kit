@@ -1,20 +1,34 @@
 <resources>
-    <string name="app_name">ML Kit Android</string>
+    <string name="app_name">Google ML Kit Android</string>
     <string name="action_settings">Settings</string>
     <string name="text_recognize_text">Recognize Text</string>
     <string name="txt_detect_faces">Detect Faces</string>
     <string name="txt_scan_barcode">Scan Barcode</string>
     <string name="txt_label_image">Label Image</string>
     <string name="img_test">Image Test ML Kit</string>
-    <string name="txt_land_mark">Land Mark</string>
+    <string name="txt_translate">Translate language (ES - EN)</string>
     <string name="request_permission">Please, the permissions are mandatory</string>
     <string name="select_img">Select an Image</string>
     <string name="lbl_error">Error</string>
     <string name="lbl_ok">OK</string>
-    <string name="lbl_info">Información</string>
+    <string name="lbl_info">Information</string>
+    <string name="lbl_language_undefined">Language Undefined</string>
+
+    <string name="send_message_button_text">Send</string>
+    <string name="empty_input_message">Enter some input text first.</string>
+    <string name="title_switch_user">Switch emulated user</string>
+    <string name="hint_input_text">Enter message text</string>
+    <string name="title_generate_sensitive_history">Generate history with sensitive content</string>
+    <string name="title_generate_basic_history">Generate basic history</string>
+    <string name="switch_user_button">SWITCH</string>
+    <string name="title_clear_history">Clear chat history</string>
+    <string name="chatting_as_red">Chatting as Red User Remote</string>
+    <string name="chatting_as_blue">Chatting as Blue User Local</string>
+    <string name="vision">Vision and Translate</string>
+    <string name="digital_ink">Digital Ink</string>
+    <string name="smart_reply">Smart Reply</string>
 
     <string-array name="options_image">
         <item>Galery</item>
-        <item>Take a Photo</item>
     </string-array>
 </resources>

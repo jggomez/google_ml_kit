@@ -1,4 +1,4 @@
-package com.devhack.mlkitandroid
+package com.devhack.mlkitandroid.vision
 
 import android.Manifest
 import android.app.Activity
@@ -14,7 +14,13 @@ import androidx.core.content.FileProvider
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
 import com.bumptech.glide.Glide
+import com.devhack.mlkitandroid.R
 import com.devhack.mlkitandroid.databinding.ActivityVisionBinding
+import com.google.mlkit.common.model.DownloadConditions
+import com.google.mlkit.nl.languageid.LanguageIdentification
+import com.google.mlkit.nl.translate.TranslateLanguage
+import com.google.mlkit.nl.translate.Translation
+import com.google.mlkit.nl.translate.TranslatorOptions
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetectorOptions
@@ -33,6 +39,7 @@ class VisionActivity : AppCompatActivity() {
         const val MY_PERMISSION = 999
         const val SELECT_PICTURE = 888
         const val REQUEST_TAKE_PHOTO = 777
+        const val LANGUAGE_UNDEFINED = "und"
     }
 
     private var mCurrentPhotoPath: String? = null
@@ -60,7 +67,7 @@ class VisionActivity : AppCompatActivity() {
             ) {
                 binding.btnDetectFaces.isEnabled = true
                 binding.btnLabelImages.isEnabled = true
-                binding.btnLandMark.isEnabled = true
+                binding.btnTranslate.isEnabled = true
                 binding.btnRecognizeText.isEnabled = true
                 binding.btnScanBarcode.isEnabled = true
             }
@@ -90,12 +97,13 @@ class VisionActivity : AppCompatActivity() {
         //binding.btnScanBarcode.setOnClickListener { readCodeBars() }
         binding.btnDetectFaces.setOnClickListener { detectFaces() }
         binding.btnLabelImages.setOnClickListener { detectLabels() }
+        binding.btnTranslate.setOnClickListener { translate() }
 
         binding.btnImage.setOnClickListener {
             if (requestPermission()) {
                 binding.btnDetectFaces.isEnabled = true
                 binding.btnLabelImages.isEnabled = true
-                binding.btnLandMark.isEnabled = true
+                binding.btnTranslate.isEnabled = true
                 binding.btnRecognizeText.isEnabled = true
                 binding.btnScanBarcode.isEnabled = true
 
@@ -153,7 +161,7 @@ class VisionActivity : AppCompatActivity() {
                         }
                     }
                 }
-                .addOnFailureListener {exception ->
+                .addOnFailureListener { exception ->
                     MaterialDialog(this).show {
                         title(R.string.lbl_error)
                         message(text = exception.message)
@@ -278,6 +286,71 @@ class VisionActivity : AppCompatActivity() {
         }
 
         return false
+    }
+
+    private fun translate() {
+
+        photoURI?.let {
+            val image = InputImage.fromFilePath(this, it)
+
+            val recognizer = TextRecognition.getClient()
+            recognizer.process(image)
+                .addOnSuccessListener { result ->
+                    val text = result.text
+                    val languageIdentifier = LanguageIdentification.getClient()
+                    languageIdentifier.identifyLanguage(text)
+                        .addOnSuccessListener { languageCode ->
+                            if (languageCode == LANGUAGE_UNDEFINED) {
+                                MaterialDialog(this).show {
+                                    title(R.string.lbl_error)
+                                    message(R.string.lbl_language_undefined)
+                                    positiveButton(R.string.lbl_ok) {
+                                        dismiss()
+                                    }
+                                }
+                            } else {
+                                val translationOptions =
+                                    TranslatorOptions.Builder()
+                                        .setSourceLanguage(TranslateLanguage.ENGLISH)
+                                        .setTargetLanguage(TranslateLanguage.SPANISH)
+                                        .build()
+
+                                val spanishTranslator =
+                                    Translation.getClient(translationOptions)
+
+                                lifecycle.addObserver(spanishTranslator)
+
+                                val conditions = DownloadConditions.Builder()
+                                    .requireWifi()
+                                    .build()
+
+                                spanishTranslator
+                                    .downloadModelIfNeeded(conditions)
+                                    .addOnSuccessListener {
+                                        spanishTranslator.translate(text)
+                                            .addOnSuccessListener { translateText ->
+                                                MaterialDialog(this).show {
+                                                    title(text = "language code => $languageCode")
+                                                    message(text = translateText)
+                                                    positiveButton(R.string.lbl_ok) {
+                                                        dismiss()
+                                                    }
+                                                }
+                                            }
+                                    }
+                            }
+                        }
+                }
+                .addOnFailureListener { exception ->
+                    MaterialDialog(this).show {
+                        title(R.string.lbl_error)
+                        message(text = exception.message)
+                        positiveButton(R.string.lbl_ok) {
+                            dismiss()
+                        }
+                    }
+                }
+        }
     }
 
     private fun takePhoto() {

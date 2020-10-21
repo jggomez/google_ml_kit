@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VisionActivity">
+    tools:context=".vision.VisionActivity">
 
     <ImageButton
         android:id="@+id/btnImage"
@@ -75,18 +75,16 @@
         app:layout_constraintTop_toBottomOf="@+id/btnScanBarcode" />
 
     <Button
-        android:id="@+id/btnLandMark"
+        android:id="@+id/btnTranslate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/txt_land_mark"
+        android:text="@string/txt_translate"
         android:theme="@style/button"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLabelImages" />
 

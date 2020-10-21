@@ -13,15 +13,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".InkActivity">
+        <activity android:name=".smartreply.SmartReplyActivity" />
+        <activity android:name=".digitalink.InkActivity" />
+        <activity android:name=".vision.VisionActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".VisionActivity" />
-        <activity android:name=".MainActivity" />
 
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
