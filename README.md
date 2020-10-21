@@ -12,7 +12,7 @@ This demo has the following:
     - Determine the language of a string of text
     - On-devie translation.
 
-Screenshots
+## Screenshots
 
 <div>
     <img src="https://github.com/jggomez/google_ml_kit/blob/master/imgs/menu.jpeg" width="200" style="margin:3em"/>
