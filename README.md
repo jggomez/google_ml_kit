@@ -14,7 +14,23 @@ This demo has the following:
 
 Screenshots
 
-![alt Menu](https://github.com/jggomez/google_ml_kit/blob/master/imgs/menu.jpeg =250x250)
+<div>
+    <img src="https://github.com/jggomez/google_ml_kit/blob/master/imgs/menu.jpeg" width="200" style="margin:100px"/>
+    <img src="https://github.com/jggomez/google_ml_kit/blob/master/imgs/vision1.jpeg" width="200" style="margin:100px"/>
+    <img src="https://github.com/jggomez/google_ml_kit/blob/master/imgs/vision2.jpeg" width="200" style="margin:100px"/>
+    <img src="https://github.com/jggomez/google_ml_kit/blob/master/imgs/vision3.jpeg" width="200" style="margin:100px"/>
+</div>
+
+<div>
+    <img src="https://github.com/jggomez/google_ml_kit/blob/master/imgs/vision4.jpeg" width="200" style="margin:100px"/>
+    <img src="https://github.com/jggomez/google_ml_kit/blob/master/imgs/vision5.jpeg" width="200" style="margin:100px"/>
+</div>
+
+<div>
+    <img src="https://github.com/jggomez/google_ml_kit/blob/master/imgs/ink1.jpeg" width="200" style="margin:100px"/>
+    <img src="https://github.com/jggomez/google_ml_kit/blob/master/imgs/ink2.jpeg" width="200" style="margin:100px"/>
+    <img src="https://github.com/jggomez/google_ml_kit/blob/master/imgs/smart_reply.jpeg" width="200" style="margin:100px"/>
+</div>
 
 
 - Twitter [@jggomezt](https://twitter.com/jggomezt)
