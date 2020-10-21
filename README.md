@@ -1,4 +1,4 @@
-# Python Reference Microservice
+# DEMO - Google Machine Learning Kit on Android
 
 This repository is a demo of Google Machine Learning Kit on Android.
 
@@ -11,6 +11,11 @@ This demo has the following:
     - Smart reply.
     - Determine the language of a string of text
     - On-devie translation.
+
+Screenshots
+
+![alt Menu](https://github.com/jggomez/google_ml_kit/blob/master/imgs/menu.jpeg)
+
 
 - Twitter [@jggomezt](https://twitter.com/jggomezt)
 - My Podcast [Snippets Tech](https://anchor.fm/jggomez)
