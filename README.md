@@ -14,7 +14,7 @@ This demo has the following:
 
 Screenshots
 
-![alt Menu](https://github.com/jggomez/google_ml_kit/blob/master/imgs/menu.jpeg)
+![alt Menu](https://github.com/jggomez/google_ml_kit/blob/master/imgs/menu.jpeg =250x250)
 
 
 - Twitter [@jggomezt](https://twitter.com/jggomezt)
